@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:money_alarm/screens/notification_screen.dart';
+import 'package:money_alarm/screens/add_asset_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -29,6 +31,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ),
           Container(
             height: 200,
+            color: Colors.grey,
             child: ListView(
               padding: const EdgeInsets.all(8),
               children: <Widget>[
@@ -50,6 +53,28 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ],
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                  child: Text('Add Asset'),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => AddAssetScreen(),
+                    );
+                  }),
+              SizedBox(
+                width: 20,
+              ),
+              RaisedButton(
+                child: Text('Notification'),
+                onPressed: () {
+                  Navigator.pushNamed(context, NotificationScreen.id);
+                },
+              ),
+            ],
+          ),
           Align(
             alignment: Alignment.centerLeft,
             child: Container(
@@ -61,7 +86,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
           Container(
-            height: 200,
+            height: 300,
+            color: Colors.grey,
             child: ListView(
               padding: const EdgeInsets.all(8),
               children: <Widget>[
