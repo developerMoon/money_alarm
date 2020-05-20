@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_alarm/screens/notification_screen.dart';
 import 'package:money_alarm/screens/add_asset_screen.dart';
+import 'package:money_alarm/widgets/assets_list.dart';
+import 'package:provider/provider.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -29,30 +31,42 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
           ),
-          Container(
-            height: 200,
-            color: Colors.grey,
-            child: ListView(
-              padding: const EdgeInsets.all(8),
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  color: Colors.amber[600],
-                  child: const Center(child: Text('USD')),
+//          Container(
+//            height: 200,
+//            color: Colors.grey,
+//            child: ListView(
+//              padding: const EdgeInsets.all(8),
+//              children: <Widget>[
+//                Container(
+//                  height: 50,
+//                  color: Colors.amber[600],
+//                  child: const Center(child: Text('USD')),
+//                ),
+//                Container(
+//                  height: 50,
+//                  color: Colors.amber[500],
+//                  child: const Center(child: Text('S&P')),
+//                ),
+//                Container(
+//                  height: 50,
+//                  color: Colors.amber[100],
+//                  child: const Center(child: Text('WTI')),
+//                ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
                 ),
-                Container(
-                  height: 50,
-                  color: Colors.amber[500],
-                  child: const Center(child: Text('S&P')),
-                ),
-                Container(
-                  height: 50,
-                  color: Colors.amber[100],
-                  child: const Center(child: Text('WTI')),
-                ),
-              ],
+              ),
+              child: AssetsList(),
             ),
           ),
+          //],
+          // ),
+          //    ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

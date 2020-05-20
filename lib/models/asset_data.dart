@@ -4,8 +4,8 @@ import 'dart:collection';
 
 class AssetData extends ChangeNotifier {
   List<Asset> _assets = [
-    Asset(name: 'USD'),
-    Asset(name: 'S&P'),
+    Asset(name: 'USD', price: 1200),
+    Asset(name: 'S&P', price: 2900),
   ];
 
   UnmodifiableListView<Asset> get assets {
@@ -16,5 +16,9 @@ class AssetData extends ChangeNotifier {
     final asset = Asset(name: newAssetName);
     _assets.add(asset);
     notifyListeners();
+  }
+
+  int get assetCount {
+    return _assets.length;
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:money_alarm/models/asset_data.dart';
 
 class AddAssetScreen extends StatelessWidget {
+  String newAssetName;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +31,9 @@ class AddAssetScreen extends StatelessWidget {
               TextField(
                 autofocus: true, //keyboard enabled, focusted
                 textAlign: TextAlign.center,
-                onChanged: (newText) {},
+                onChanged: (newText) {
+                  newAssetName = newText;
+                },
               ),
               FlatButton(
                 child: Text(
@@ -40,8 +45,8 @@ class AddAssetScreen extends StatelessWidget {
                 color: Colors.lightBlueAccent,
                 onPressed: () {
                   //add task
-//                  Provider.of<TaskData>(context, listen: false)
-//                      .addTask(newTaskTitle);
+                  Provider.of<AssetData>(context, listen: false)
+                      .addAsset(newAssetName);
                   Navigator.pop(context);
                 }, //onPressed is not added -> disabled
               ),
