@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:money_alarm/models/asset_data.dart';
 import 'package:money_alarm/screens/notification_screen.dart';
 import 'package:money_alarm/screens/add_asset_screen.dart';
 import 'package:money_alarm/widgets/assets_list.dart';
 import 'package:provider/provider.dart';
+import 'package:finance_quote/finance_quote.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -12,6 +14,13 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    AssetData assetData = AssetData();
+    assetData.setAssetPrice();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
