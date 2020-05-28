@@ -14,11 +14,10 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  AssetData assetData = AssetData();
   @override
   void initState() {
     super.initState();
-    AssetData assetData = AssetData();
-    assetData.setAssetPrice();
   }
 
   @override
@@ -30,15 +29,37 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       body: SafeArea(
           child: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.only(left: 13, top: 8),
-              child: Text(
-                'Watchlist',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: EdgeInsets.only(left: 13, top: 8),
+                  child: Text(
+                    'Watchlist',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                ),
               ),
-            ),
+              Container(
+                alignment: Alignment.centerRight,
+                child: FlatButton(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 13, top: 8),
+                    child: Icon(
+                      Icons.refresh,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  onPressed: () {
+                    //add task
+                    Provider.of<AssetData>(context, listen: false)
+                        .setAssetPrice();
+                  },
+                ),
+              ),
+            ],
           ),
 //          Container(
 //            height: 200,

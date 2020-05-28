@@ -5,14 +5,14 @@ import 'dart:collection';
 
 class AssetData extends ChangeNotifier {
   List<Asset> _assets = [
-    Asset(name: 'GOOG', price: '1200'),
-    Asset(name: 'AMZN', price: '2900'),
-    Asset(name: 'AAPL', price: '200'),
+    Asset(name: 'GOOG', price: 'waiting'),
+    Asset(name: 'AMZN', price: 'waiting'),
+    Asset(name: 'AAPL', price: 'waiting'),
   ];
 
-//  UnmodifiableListView<Asset> get assets {
-//    return UnmodifiableListView(_assets);
-//  }
+  UnmodifiableListView<Asset> get assets {
+    return UnmodifiableListView(_assets);
+  }
 
 //  ListView<Asset> get assets {
 //    return ListView(_assets);
@@ -29,15 +29,14 @@ class AssetData extends ChangeNotifier {
   }
 
   void setAssetPrice() async {
-    for (var asset in _assets) {
+    for (var i = 0; i < _assets.length; i++) {
       final Map<String, Map<String, String>> quotePrice =
           await FinanceQuote.getPrice(
               quoteProvider: QuoteProvider.yahoo,
-              symbols: <String>[asset.name]);
+              symbols: <String>[_assets[i].name]);
       print(
-          'Current market price for ${asset.name}: ${quotePrice[asset.name]['price']}.');
-      asset.price = quotePrice[asset.name]['price'];
-      print('asset.price: ${asset.price}');
+          'Current market price for ${_assets[i].name}: ${quotePrice[_assets[i].name]['price']}.');
+      _assets[i].price = quotePrice[_assets[i].name]['price'];
       notifyListeners();
     }
   }
