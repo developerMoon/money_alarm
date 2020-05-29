@@ -12,10 +12,6 @@ class AssetsList extends StatelessWidget {
           itemBuilder: (context, index) {
             final asset = assetData.assets[index];
             return AssetTile(
-              setAssetPrice: () {
-                assetData.setAssetPrice();
-                print('test ${asset.price}'); //not printed
-              },
               assetName: asset.name,
               assetPrice: asset.price,
             );

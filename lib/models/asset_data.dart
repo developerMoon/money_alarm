@@ -14,12 +14,8 @@ class AssetData extends ChangeNotifier {
     return UnmodifiableListView(_assets);
   }
 
-//  ListView<Asset> get assets {
-//    return ListView(_assets);
-//  }
-//
   void addAsset(String newAssetName) {
-    final asset = Asset(name: newAssetName);
+    final asset = Asset(name: newAssetName, price: 'waiting');
     _assets.add(asset);
     notifyListeners();
   }

@@ -18,6 +18,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<AssetData>(context, listen: false).setAssetPrice();
   }
 
   @override
@@ -53,7 +54,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     ),
                   ),
                   onPressed: () {
-                    //add task
                     Provider.of<AssetData>(context, listen: false)
                         .setAssetPrice();
                   },
@@ -61,27 +61,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ],
           ),
-//          Container(
-//            height: 200,
-//            color: Colors.grey,
-//            child: ListView(
-//              padding: const EdgeInsets.all(8),
-//              children: <Widget>[
-//                Container(
-//                  height: 50,
-//                  color: Colors.amber[600],
-//                  child: const Center(child: Text('USD')),
-//                ),
-//                Container(
-//                  height: 50,
-//                  color: Colors.amber[500],
-//                  child: const Center(child: Text('S&P')),
-//                ),
-//                Container(
-//                  height: 50,
-//                  color: Colors.amber[100],
-//                  child: const Center(child: Text('WTI')),
-//                ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -94,9 +73,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               child: AssetsList(),
             ),
           ),
-          //],
-          // ),
-          //    ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -130,7 +106,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
           Container(
-            height: 300,
+            height: 250,
             color: Colors.grey,
             child: ListView(
               padding: const EdgeInsets.all(8),

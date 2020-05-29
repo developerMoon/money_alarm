@@ -48,7 +48,9 @@ class AddAssetScreen extends StatelessWidget {
                   Provider.of<AssetData>(context, listen: false)
                       .addAsset(newAssetName);
                   Navigator.pop(context);
-                }, //onPressed is not added -> disabled
+                  Provider.of<AssetData>(context, listen: false)
+                      .setAssetPrice();
+                },
               ),
             ],
           ),
