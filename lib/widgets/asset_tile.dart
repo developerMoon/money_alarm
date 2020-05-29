@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 class AssetTile extends StatefulWidget {
   final String assetName;
   String assetPrice;
-  Function setAssetPrice;
 
-  AssetTile({this.assetName, this.assetPrice, this.setAssetPrice});
+  AssetTile({this.assetName, this.assetPrice});
 
   @override
   _AssetTileState createState() => _AssetTileState();

@@ -26,6 +26,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dashboard'),
+        backgroundColor: Colors.deepPurple,
       ),
       body: SafeArea(
           child: Column(
