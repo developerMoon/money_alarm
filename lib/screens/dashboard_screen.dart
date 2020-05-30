@@ -19,7 +19,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AssetData>(context, listen: false).setAssetPrice();
+    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
   }
 
   @override
@@ -57,7 +57,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                   onPressed: () {
                     Provider.of<AssetData>(context, listen: false)
-                        .setAssetPrice();
+                        .setAssetPrice(context);
                   },
                 ),
               ),
