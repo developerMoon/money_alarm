@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:money_alarm/models/notification_data.dart';
-import 'package:money_alarm/models/notification_data.dart';
+import 'package:money_alarm/widgets/notifications_list.dart';
 import 'dart:collection';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class NotificationScreen extends StatelessWidget {
   static const id = 'notification_screen';
@@ -17,15 +18,14 @@ class NotificationScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          DatePicker.showTime12hPicker(context, showTitleActions: true,
-              onChanged: (time) {
-            print('change $time');
-          }, onConfirm: (time) {
-            print('confirm $time');
-            //notificationData.addNotification(time);
+          DatePicker.showTimePicker(context,
+              showTitleActions: true,
+              showSecondsColumn: false, onConfirm: (time) {
+            String formattedTime = DateFormat('kk:mm').format(time);
+            print('confirm $formattedTime');
             Provider.of<NotificationData>(context, listen: false)
-                .addNotification(time);
-          }, currentTime: DateTime.now(), locale: LocaleType.en);
+                .addNotification(formattedTime);
+          }, locale: LocaleType.ko);
         },
         backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),
@@ -48,28 +48,6 @@ class NotificationScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class NotificationsList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<NotificationData>(
-      builder: (context, notificationData, child) {
-        return ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                '${notificationData.notifications[index]}',
-              ),
-            );
-          },
-          itemCount: notificationData.notificationCount,
-        );
-      },
     );
   }
 }

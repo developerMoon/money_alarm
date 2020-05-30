@@ -5,6 +5,7 @@ import 'package:money_alarm/screens/add_asset_screen.dart';
 import 'package:money_alarm/widgets/assets_list.dart';
 import 'package:provider/provider.dart';
 import 'package:finance_quote/finance_quote.dart';
+import 'package:intl/intl.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';

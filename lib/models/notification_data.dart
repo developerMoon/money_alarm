@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'dart:collection';
 
 class NotificationData extends ChangeNotifier {
-  List<DateTime> _notifications = [
-    DateTime.now(),
-  ];
-  UnmodifiableListView<DateTime> get notifications {
+  List<String> _notifications = [];
+
+  UnmodifiableListView<String> get notifications {
     return UnmodifiableListView(_notifications);
   }
 
-  void addNotification(DateTime time) {
+  void addNotification(String time) {
     _notifications.add(time);
     notifyListeners();
   }
