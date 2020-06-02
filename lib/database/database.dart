@@ -40,4 +40,17 @@ class DBProvider {
         await db.query("Asset", where: "name = ?", whereArgs: [assetName]);
     return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
   }
+
+  getAllAssetsDB() async {
+    final db = await database;
+    var res = await db.query("Asset");
+    List<Asset> list =
+        res.isNotEmpty ? res.map((c) => Asset.fromMap(c)).toList() : [];
+    return list;
+  }
+
+  deleteAssetDB(String assetName) async {
+    final db = await database;
+    db.delete("Asset", where: "name = ?", whereArgs: [assetName]);
+  }
 }

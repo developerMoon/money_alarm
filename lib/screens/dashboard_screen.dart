@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:finance_quote/finance_quote.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:money_alarm/models/asset.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -166,8 +167,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text('Notification'),
                   onPressed: () async {
                     Navigator.pushNamed(context, NotificationScreen.id);
-                    var selectData = await DBProvider.db.getAssetDB('TSLA');
-                    print('select from db: ${selectData["name"]}');
+                    Future<Asset> selectData =
+                        await DBProvider.db.getAssetDB('TSLA');
+
+                    //print('select from db: ${selectData.fromMap}');
                   },
                 ),
               ],
