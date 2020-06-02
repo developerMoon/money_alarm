@@ -46,7 +46,8 @@ class AddAssetScreen extends StatelessWidget {
                 onPressed: () {
                   //add task
                   Provider.of<AssetData>(context, listen: false)
-                      .addAsset(newAssetName);
+                      .addAsset(context, newAssetName);
+
                   Navigator.pop(context);
                 },
               ),

@@ -15,7 +15,7 @@ class AssetData extends ChangeNotifier {
     return UnmodifiableListView(_assets);
   }
 
-  void addAsset(String newAssetName) async {
+  void addAsset(BuildContext context, String newAssetName) async {
     final Map<String, Map<String, String>> quotePrice =
         await FinanceQuote.getPrice(
             quoteProvider: QuoteProvider.yahoo,

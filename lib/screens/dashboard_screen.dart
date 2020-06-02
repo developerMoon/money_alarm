@@ -6,6 +6,7 @@ import 'package:money_alarm/widgets/assets_list.dart';
 import 'package:provider/provider.dart';
 import 'package:finance_quote/finance_quote.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -14,12 +15,45 @@ class DashBoardScreen extends StatefulWidget {
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
 
+//class Notification{
+
+//}
+
 class _DashBoardScreenState extends State<DashBoardScreen> {
   AssetData assetData = AssetData();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   @override
   void initState() {
     super.initState();
     Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    var android = AndroidInitializationSettings('app_icon');
+    var iOS = IOSInitializationSettings();
+    var initSettings = InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSettings,
+        onSelectNotification: onSelectedNotification);
+  }
+
+  Future onSelectedNotification(String payload) async {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Your payload'),
+        content: Text('payload? : $payload'),
+      ),
+    );
+  }
+
+  Future<void> _showNotification() async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'plain title', 'plain body', platformChannelSpecifics,
+        payload: 'item x');
   }
 
   @override
@@ -58,6 +92,43 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   onPressed: () {
                     Provider.of<AssetData>(context, listen: false)
                         .setAssetPrice(context);
+                  },
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                child: FlatButton(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 13, top: 8),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  onPressed: () async {
+                    await _showNotification();
+//                    FlutterLocalNotificationsPlugin
+//                        flutterLocalNotificationsPlugin =
+//                        FlutterLocalNotificationsPlugin();
+//                    var initializationSettingsAndroid =
+//                        AndroidInitializationSettings('app_icon');
+//                    var initializationSettingsIOS = IOSInitializationSettings(
+//                      requestSoundPermission: false,
+//                      requestBadgePermission: false,
+//                      requestAlertPermission: false,
+//                      //onDidReceiveLocalNotification: onSelectNotification,
+//                    );
+//                    var initializationSettings = InitializationSettings(
+//                        initializationSettingsAndroid,
+//                        initializationSettingsIOS);
+//                    await flutterLocalNotificationsPlugin
+//                        .initialize(initializationSettings,
+//                            onSelectNotification: (String payload) async {
+//                      if (payload != null) {
+//                        debugPrint('notification payload: ' + payload);
+//                      }
+//                      //selectNotificationSubject.add(payload);
+//                    });
                   },
                 ),
               ),
