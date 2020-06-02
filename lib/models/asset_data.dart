@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'dart:collection';
+import 'package:money_alarm/database/database.dart';
+import 'package:sqflite/sqflite.dart';
 
 class AssetData extends ChangeNotifier {
   List<Asset> _assets = [
@@ -24,6 +26,7 @@ class AssetData extends ChangeNotifier {
     final asset = Asset(
         name: newAssetName, price: '${quotePrice[newAssetName]['price']}');
     _assets.add(asset);
+    DBProvider.db.addAssetDB(asset);
     notifyListeners();
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_alarm/database/database.dart';
 import 'package:money_alarm/models/asset_data.dart';
 import 'package:money_alarm/screens/notification_screen.dart';
 import 'package:money_alarm/screens/add_asset_screen.dart';
@@ -92,8 +93,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 RaisedButton(
                   child: Text('Notification'),
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pushNamed(context, NotificationScreen.id);
+                    var selectData = await DBProvider.db.getAssetDB('TSLA');
+                    print('select from db: ${selectData["name"]}');
                   },
                 ),
               ],
@@ -109,8 +112,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
             Expanded(
-//              height: 250,
-//              color: Colors.grey,
               child: ListView(
                 padding: const EdgeInsets.all(8),
                 children: <Widget>[
