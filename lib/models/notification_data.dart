@@ -13,6 +13,11 @@ class NotificationData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deletNotification(int index) {
+    _notifications.removeAt(index);
+    notifyListeners();
+  }
+
   int get notificationCount {
     return _notifications.length;
   }

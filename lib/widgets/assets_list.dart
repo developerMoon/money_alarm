@@ -12,9 +12,11 @@ class AssetsList extends StatelessWidget {
           itemBuilder: (context, index) {
             final asset = assetData.assets[index];
             return AssetTile(
-              assetName: asset.name,
-              assetPrice: asset.price,
-            );
+                assetName: asset.name,
+                assetPrice: asset.price,
+                longPressDeleteTask: () {
+                  assetData.deleteAsset(asset);
+                });
           },
           itemCount: assetData.assetCount,
         );

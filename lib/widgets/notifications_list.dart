@@ -15,6 +15,9 @@ class NotificationsList extends StatelessWidget {
               title: Text(
                 '${notificationData.notifications[index]}',
               ),
+              onLongPress: () {
+                notificationData.deletNotification(index);
+              },
             );
           },
           itemCount: notificationData.notificationCount,

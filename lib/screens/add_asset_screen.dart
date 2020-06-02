@@ -33,6 +33,7 @@ class AddAssetScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 onChanged: (newText) {
                   newAssetName = newText;
+                  //FocusScope.of(context).requestFocus(FocusNode());
                 },
               ),
               FlatButton(
@@ -47,6 +48,8 @@ class AddAssetScreen extends StatelessWidget {
                   //add task
                   Provider.of<AssetData>(context, listen: false)
                       .addAsset(context, newAssetName);
+
+                  //.addAsset(context, newAssetName);
 
                   Navigator.pop(context);
                 },
