@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 
-class AssetTile extends StatefulWidget {
+class AssetTile extends StatelessWidget {
   final String assetName;
   String assetPrice;
+  final Function longPressDeleteTask;
 
-  AssetTile({this.assetName, this.assetPrice});
+  AssetTile({this.assetName, this.assetPrice, this.longPressDeleteTask});
 
-  @override
-  _AssetTileState createState() => _AssetTileState();
-}
-
-class _AssetTileState extends State<AssetTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        widget.assetName,
+        assetName,
       ),
       trailing: Text(
-        widget.assetPrice,
+        assetPrice,
       ),
-      //onLongPress: longPressCallback,
+      onLongPress: longPressDeleteTask,
     );
   }
 }

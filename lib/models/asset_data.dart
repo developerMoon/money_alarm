@@ -27,6 +27,11 @@ class AssetData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteAsset(Asset asset) {
+    _assets.remove(asset);
+    notifyListeners();
+  }
+
   int get assetCount {
     return _assets.length;
   }

@@ -30,109 +30,111 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         backgroundColor: Colors.deepPurple,
       ),
       body: SafeArea(
-          child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  padding: EdgeInsets.only(left: 13, top: 8),
-                  child: Text(
-                    'Watchlist',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 13, top: 8),
-                    child: Icon(
-                      Icons.refresh,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onPressed: () {
-                    Provider.of<AssetData>(context, listen: false)
-                        .setAssetPrice(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-              ),
-              child: AssetsList(),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                  child: Text('Add Asset'),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => AddAssetScreen(),
-                    );
-                  }),
-              SizedBox(
-                width: 20,
-              ),
-              RaisedButton(
-                child: Text('Notification'),
-                onPressed: () {
-                  Navigator.pushNamed(context, NotificationScreen.id);
-                },
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.only(left: 13, top: 8),
-              child: Text(
-                'News',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-            ),
-          ),
-          Container(
-            height: 250,
-            color: Colors.grey,
-            child: ListView(
-              padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  height: 50,
-                  color: Colors.amber[600],
-                  child: const Center(child: Text('USD')),
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 13, top: 8),
+                    child: Text(
+                      'Watchlist',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    ),
+                  ),
                 ),
                 Container(
-                  height: 50,
-                  color: Colors.amber[500],
-                  child: const Center(child: Text('S&P')),
-                ),
-                Container(
-                  height: 50,
-                  color: Colors.amber[100],
-                  child: const Center(child: Text('WTI')),
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 13, top: 8),
+                      child: Icon(
+                        Icons.refresh,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    onPressed: () {
+                      Provider.of<AssetData>(context, listen: false)
+                          .setAssetPrice(context);
+                    },
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      )),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                ),
+                child: AssetsList(),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                    child: Text('Add Asset'),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => AddAssetScreen(),
+                      );
+                    }),
+                SizedBox(
+                  width: 20,
+                ),
+                RaisedButton(
+                  child: Text('Notification'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, NotificationScreen.id);
+                  },
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: EdgeInsets.only(left: 13, top: 8),
+                child: Text(
+                  'News',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                ),
+              ),
+            ),
+            Expanded(
+//              height: 250,
+//              color: Colors.grey,
+              child: ListView(
+                padding: const EdgeInsets.all(8),
+                children: <Widget>[
+                  Container(
+                    height: 50,
+                    color: Colors.amber[600],
+                    child: const Center(child: Text('USD')),
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.amber[500],
+                    child: const Center(child: Text('S&P')),
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.amber[100],
+                    child: const Center(child: Text('WTI')),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
