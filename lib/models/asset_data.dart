@@ -7,11 +7,7 @@ import 'package:money_alarm/database/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AssetData extends ChangeNotifier {
-  List<Asset> _assets = [
-    Asset(name: 'GOOG', price: 'waiting'),
-    Asset(name: 'AMZN', price: 'waiting'),
-    Asset(name: 'AAPL', price: 'waiting'),
-  ];
+  List<Asset> _assets = [];
 
   UnmodifiableListView<Asset> get assets {
     return UnmodifiableListView(_assets);
@@ -48,6 +44,7 @@ class AssetData extends ChangeNotifier {
       print(
           'setAssetPrice - Current market price for ${_assets[i].name}: ${quotePrice[_assets[i].name]['price']}.');
       _assets[i].price = quotePrice[_assets[i].name]['price'];
+      DBProvider.db.updateAssetDB(_assets[i]);
       notifyListeners();
     }
   }

@@ -27,13 +27,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    var android = AndroidInitializationSettings('app_icon');
-    var iOS = IOSInitializationSettings();
-    var initSettings = InitializationSettings(android, iOS);
-    flutterLocalNotificationsPlugin.initialize(initSettings,
-        onSelectNotification: onSelectedNotification);
+//    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
+//    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+//    var android = AndroidInitializationSettings('app_icon');
+//    var iOS = IOSInitializationSettings();
+//    var initSettings = InitializationSettings(android, iOS);
+//    flutterLocalNotificationsPlugin.initialize(initSettings,
+//        onSelectNotification: onSelectedNotification);
+//    DBProvider.db.deleteAllDB();
+//    DBProvider.db.addAssetDB(Asset(name: 'TSLA', price: '500'));
+//    DBProvider.db.addAssetDB(Asset(name: 'GOOG', price: '500'));
+//    DBProvider.db.addAssetDB(Asset(name: 'AAPL', price: '500'));
   }
 
   Future onSelectedNotification(String payload) async {
@@ -167,10 +171,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text('Notification'),
                   onPressed: () async {
                     Navigator.pushNamed(context, NotificationScreen.id);
-                    Future<Asset> selectData =
-                        await DBProvider.db.getAssetDB('TSLA');
+                    DBProvider.db.addAssetDB(Asset(name: 'TSLA', price: '500'));
+                    Asset selectData = await DBProvider.db.getAssetDB('TSLA');
+                    print(selectData);
 
-                    //print('select from db: ${selectData.fromMap}');
+                    var list = await DBProvider.db.getAllAssetsDB();
+                    print('printed tsla : ${list[0].name}, ${list[0].price} ');
                   },
                 ),
               ],
