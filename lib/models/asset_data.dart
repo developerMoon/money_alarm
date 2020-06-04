@@ -7,7 +7,8 @@ import 'package:money_alarm/database/database.dart';
 import 'package:sqflite/sqflite.dart';
 import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
 
-class AssetData extends ChangeNotifier {
+//class AssetData extends ChangeNotifier {
+class AssetData {
   List<Asset> _assets = [];
   final bloc = AssetBloc();
 
@@ -28,28 +29,28 @@ class AssetData extends ChangeNotifier {
 //    notifyListeners();
   }
 
-  void deleteAsset(Asset asset) {
-    _assets.remove(asset);
-    notifyListeners();
-  }
+//  void deleteAsset(Asset asset) {
+//    _assets.remove(asset);
+//    notifyListeners();
+//  }
 
   int get assetCount {
     return _assets.length;
   }
 
-  void setAssetPrice(BuildContext context) async {
-    for (var i = 0; i < _assets.length; i++) {
-      final Map<String, Map<String, String>> quotePrice =
-          await FinanceQuote.getPrice(
-              quoteProvider: QuoteProvider.yahoo,
-              symbols: <String>[_assets[i].name]);
-      print(
-          'setAssetPrice - Current market price for ${_assets[i].name}: ${quotePrice[_assets[i].name]['price']}.');
-      _assets[i].price = quotePrice[_assets[i].name]['price'];
-      DBProvider.db.updateAssetDB(_assets[i]);
-      notifyListeners();
-    }
-  }
+//  void setAssetPrice(BuildContext context) async {
+//    for (var i = 0; i < _assets.length; i++) {
+//      final Map<String, Map<String, String>> quotePrice =
+//          await FinanceQuote.getPrice(
+//              quoteProvider: QuoteProvider.yahoo,
+//              symbols: <String>[_assets[i].name]);
+//      print(
+//          'setAssetPrice - Current market price for ${_assets[i].name}: ${quotePrice[_assets[i].name]['price']}.');
+//      _assets[i].price = quotePrice[_assets[i].name]['price'];
+//      DBProvider.db.updateAssetDB(_assets[i]);
+//      notifyListeners();
+//    }
+//  }
 }
 
 showAlertDialog(BuildContext context) {

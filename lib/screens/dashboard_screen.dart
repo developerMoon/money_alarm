@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_alarm/database/database.dart';
 import 'package:money_alarm/models/asset_data.dart';
+import 'package:money_alarm/models/secrets.dart';
 import 'package:money_alarm/screens/notification_screen.dart';
 import 'package:money_alarm/screens/add_asset_screen.dart';
 import 'package:money_alarm/widgets/assets_list.dart';
@@ -9,7 +10,8 @@ import 'package:finance_quote/finance_quote.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/models/asset.dart';
-import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
+import 'package:money_alarm/database//asset_bloc.dart';
+import 'package:newsapi/newsapi.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -136,15 +138,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   alignment: Alignment.centerRight,
                   child: FlatButton(
                     child: Container(
-                      padding: EdgeInsets.only(left: 13, top: 8),
+                      padding: EdgeInsets.only(left: 25, top: 8),
                       child: Icon(
                         Icons.refresh,
                         color: Colors.grey,
                       ),
                     ),
                     onPressed: () {
-                      Provider.of<AssetData>(context, listen: false)
-                          .setAssetPrice(context);
+//                      Provider.of<AssetData>(context, listen: false)
+//                          .setAssetPrice(context);
                     },
                   ),
                 ),
@@ -210,14 +212,27 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     child: const Center(child: Text('USD')),
                   ),
                   Container(
-                    height: 50,
-                    color: Colors.amber[500],
-                    child: const Center(child: Text('S&P')),
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.amber[100],
-                    child: const Center(child: Text('WTI')),
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      child: Container(
+                        child: Icon(
+                          Icons.refresh,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      onPressed: () async {
+                        var newsApi = NewsApi();
+                        newsApi.init(debugLog: true, apiKey: apiKey);
+
+//                        ArticleResponse topHeadlines =
+//                            await newsApi.topHeadlines(language: 'en');
+//                        print(topHeadlines);
+
+                        ArticleResponse everything = await newsApi.everything(
+                            q: 'NYSE:DIS', language: 'en');
+                        print('everything: $everything');
+                      },
+                    ),
                   ),
                 ],
               ),

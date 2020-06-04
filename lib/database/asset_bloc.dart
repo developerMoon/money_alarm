@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:money_alarm/database/database.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'dart:async';
 import 'package:finance_quote/finance_quote.dart';
 
-class AssetBloc {
+class AssetBloc extends ChangeNotifier {
   AssetBloc() {
     getAssets();
   }
@@ -16,6 +17,7 @@ class AssetBloc {
 
   getAssets() async {
     _assetController.sink.add(await DBProvider.db.getAllAssetsDB());
+    notifyListeners();
   }
 
   delete(String assetName) {

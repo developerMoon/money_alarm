@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 Asset assetFromMap(String str) => Asset.fromMap(json.decode(str));
 
 String assetToMap(Asset data) => json.encode(data.toMap());
