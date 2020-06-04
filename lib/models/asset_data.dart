@@ -5,7 +5,7 @@ import 'package:money_alarm/models/asset.dart';
 import 'dart:collection';
 import 'package:money_alarm/database/database.dart';
 import 'package:sqflite/sqflite.dart';
-import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
+import 'package:money_alarm/database/asset_bloc.dart';
 
 //class AssetData extends ChangeNotifier {
 class AssetData {

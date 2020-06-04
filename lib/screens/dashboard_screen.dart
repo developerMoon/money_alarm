@@ -12,6 +12,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'package:money_alarm/database//asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
+import 'package:money_alarm/models/news.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -203,39 +204,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(8),
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    color: Colors.amber[600],
-                    child: const Center(child: Text('USD')),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: FlatButton(
-                      child: Container(
-                        child: Icon(
-                          Icons.refresh,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      onPressed: () async {
-                        var newsApi = NewsApi();
-                        newsApi.init(debugLog: true, apiKey: apiKey);
-
-//                        ArticleResponse topHeadlines =
-//                            await newsApi.topHeadlines(language: 'en');
-//                        print(topHeadlines);
-
-                        ArticleResponse everything = await newsApi.everything(
-                            q: 'NYSE:DIS', language: 'en');
-                        print('everything: $everything');
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              child: NewsList(),
             ),
           ],
         ),

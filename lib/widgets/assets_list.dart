@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:money_alarm/models/news.dart';
 import 'package:money_alarm/widgets/asset_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
@@ -49,61 +50,67 @@ class _AssetsListState extends State<AssetsList> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  Asset asset = snapshot.data[index];
-                  return Dismissible(
-                    key: UniqueKey(),
-                    background: Container(color: Colors.red),
-                    onDismissed: (direction) {
-                      bloc.delete(asset.name);
-                    },
-                    child: AssetTile(
-                      assetName: asset.name,
-                      assetPrice: asset.price,
-                      onTapShowNews: () async {
-                        var newsApi = NewsApi();
-                        newsApi.init(debugLog: true, apiKey: apiKey);
-
-//                        ArticleResponse topHeadlines =
-//                            await newsApi.topHeadlines(language: 'en');
-//                        print(topHeadlines);
-
-                        //ArticleResponse topHeadlines =
-                        var headline = await newsApi.topHeadlines(
-                          q: '${asset.name}',
-                          language: 'en',
-//                          country: 'us',
-//                          category: 'business',
-                          pageSize: 10,
-                        );
-//                        var vresult = headline.articles;
-//
-//                        print(
-//                            '------result headline: ${vresult[0].toString()} ${vresult[1]}   ');
-                        //var title = jsonDecode(vresult)['articles'][1]['title'];
-
-                        //print('------result title: $title  ');
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    Asset asset = snapshot.data[index];
+                    return Dismissible(
+                      key: UniqueKey(),
+                      background: Container(color: Colors.red),
+                      onDismissed: (direction) {
+                        bloc.delete(asset.name);
                       },
-//                    longPressDeleteTask: () {
-//                      snapshot.data.deleteAsset(asset);
-//                    },
-//    leading: Text(item.id.toString()),
-//    trailing: Checkbox(
-//    onChanged: (bool value) {
-//    DBProvider.db.blockClient(item);
-//    setState(() {});
-//    },
-//    value: item.blocked,
-//    ),
-                    ),
-                  );
-                },
-              );
+                      child: AssetTile(
+                          assetName: asset.name,
+                          assetPrice: asset.price,
+                          onTapShowNews: () async {
+                            NewsList newsList = NewsList(
+                              assetName: asset.name,
+                            );
+                            setState(() {
+                              newsList.getAssetNews();
+                            });
+                          }),
+                    );
+                  });
             } else {
               return Center(child: CircularProgressIndicator());
             }
           }),
     );
+  }
+}
+
+class NewsList extends StatelessWidget {
+  final String assetName;
+  NewsList({this.assetName});
+  List news = [];
+
+  void getAssetNews() async {
+    var newsApi = NewsApi();
+    newsApi.init(debugLog: true, apiKey: apiKey);
+
+    var headlines = await newsApi.topHeadlines(
+      q: '$assetName',
+      language: 'en',
+      pageSize: 20,
+    );
+    var headlineList = headlines.articles.toList();
+    for (var headline in headlineList) {
+      print('------ ${headline.title} -----');
+      news.add(headline.title);
+    }
+    print('news length!! : ${news.length}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    getAssetNews();
+//    if (news.length != 0) {
+    return ListView(
+        children: new List.generate(
+            20, (index) => ListTile(title: Text('${news[index].title}'))));
+//    } else {
+//      return Center(child: CircularProgressIndicator());
+//    }
   }
 }
