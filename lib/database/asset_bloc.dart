@@ -20,6 +20,11 @@ class AssetBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  getFirstAsset() async {
+    await DBProvider.db.getFirstAssetDB();
+    //notifyListeners();
+  }
+
   delete(String assetName) {
     DBProvider.db.deleteAssetDB(assetName);
     getAssets();

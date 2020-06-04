@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:money_alarm/models/news.dart';
+import 'package:money_alarm/models/news_list.dart';
 import 'package:money_alarm/widgets/asset_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
@@ -77,46 +77,5 @@ class _AssetsListState extends State<AssetsList> {
             }
           }),
     );
-  }
-}
-
-class NewsList extends StatefulWidget {
-  final String assetName;
-  NewsList({this.assetName});
-
-  @override
-  _NewsListState createState() => _NewsListState();
-}
-
-class _NewsListState extends State<NewsList> {
-  List news = [];
-
-  void getAssetNews() async {
-    var newsApi = NewsApi();
-    newsApi.init(debugLog: true, apiKey: apiKey);
-
-    var headlines = await newsApi.topHeadlines(
-      q: '${widget.assetName}',
-      language: 'en',
-      pageSize: 20,
-    );
-    var headlineList = headlines.articles.toList();
-    for (var headline in headlineList) {
-      print('------ ${headline.title} -----');
-      news.add(headline.title);
-    }
-    print('news length!! : ${news.length}');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    getAssetNews();
-    if (news.length != 0) {
-      return ListView(
-          children: new List.generate(
-              20, (index) => ListTile(title: Text('${news[index].title}'))));
-    } else {
-      return Center(child: CircularProgressIndicator());
-    }
   }
 }

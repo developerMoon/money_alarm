@@ -49,6 +49,14 @@ class DBProvider {
     return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
   }
 
+  getFirstAssetDB() async {
+    final db = await database;
+    var res = await db
+        .rawQuery('Select name from "ASSET" order by rowid asc limit 1');
+    print('res  $res');
+    return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
+  }
+
   getAllAssetsDB() async {
     final db = await database;
     var res = await db.query("Asset");

@@ -12,7 +12,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'package:money_alarm/database//asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
-import 'package:money_alarm/models/news.dart';
+import 'package:money_alarm/models/news_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
