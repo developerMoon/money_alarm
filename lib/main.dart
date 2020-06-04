@@ -12,7 +12,7 @@ class MoneyAlarm extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AssetData>(create: (context) => AssetData()),
+        //ChangeNotifierProvider<AssetData>(create: (context) => AssetData()),
         ChangeNotifierProvider<NotificationData>(
             create: (context) => NotificationData()),
       ],

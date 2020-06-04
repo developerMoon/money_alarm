@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
+import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
 
 class AddAssetScreen extends StatelessWidget {
   String newAssetName;
+  final bloc = AssetBloc();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +35,7 @@ class AddAssetScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 onChanged: (newText) {
                   newAssetName = newText;
+
                   //FocusScope.of(context).requestFocus(FocusNode());
                 },
               ),
@@ -46,9 +49,9 @@ class AddAssetScreen extends StatelessWidget {
                 color: Colors.lightBlueAccent,
                 onPressed: () {
                   //add task
-                  Provider.of<AssetData>(context, listen: false)
-                      .addAsset(context, newAssetName);
-
+//                  Provider.of<AssetData>(context, listen: false)
+//                      .addAsset(context, newAssetName);
+                  bloc.add(newAssetName);
                   //.addAsset(context, newAssetName);
 
                   Navigator.pop(context);

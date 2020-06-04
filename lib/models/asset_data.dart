@@ -5,25 +5,27 @@ import 'package:money_alarm/models/asset.dart';
 import 'dart:collection';
 import 'package:money_alarm/database/database.dart';
 import 'package:sqflite/sqflite.dart';
+import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
 
 class AssetData extends ChangeNotifier {
   List<Asset> _assets = [];
+  final bloc = AssetBloc();
 
   UnmodifiableListView<Asset> get assets {
     return UnmodifiableListView(_assets);
   }
 
   void addAsset(BuildContext context, String newAssetName) async {
-    final Map<String, Map<String, String>> quotePrice =
-        await FinanceQuote.getPrice(
-            quoteProvider: QuoteProvider.yahoo,
-            symbols: <String>[newAssetName]);
-
-    final asset = Asset(
-        name: newAssetName, price: '${quotePrice[newAssetName]['price']}');
-    _assets.add(asset);
-    DBProvider.db.addAssetDB(asset);
-    notifyListeners();
+//    final Map<String, Map<String, String>> quotePrice =
+//        await FinanceQuote.getPrice(
+//            quoteProvider: QuoteProvider.yahoo,
+//            symbols: <String>[newAssetName]);
+//
+//    final asset = Asset(
+//        name: newAssetName, price: '${quotePrice[newAssetName]['price']}');
+//    //_assets.add(asset);
+//    bloc.add(asset);
+//    notifyListeners();
   }
 
   void deleteAsset(Asset asset) {

@@ -56,6 +56,7 @@ class DBProvider {
     List<Asset> list =
         res.isNotEmpty ? res.map((c) => Asset.fromMap(c)).toList() : [];
     //assetData.setAssets(list);
+
     return list;
   }
 

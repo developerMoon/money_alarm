@@ -9,6 +9,7 @@ import 'package:finance_quote/finance_quote.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/models/asset.dart';
+import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -22,6 +23,7 @@ class DashBoardScreen extends StatefulWidget {
 //}
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  final bloc = AssetBloc();
   AssetData assetData = AssetData();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   @override
@@ -60,6 +62,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     await flutterLocalNotificationsPlugin.show(
         0, 'plain title', 'plain body', platformChannelSpecifics,
         payload: 'item x');
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    bloc.dispose();
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:money_alarm/models/asset_data.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:money_alarm/database/database.dart';
+import 'file:///C:/Users/soyoung.moon/AndroidStudioProjects/money_alarm/lib/database/asset_bloc.dart';
 
 class AssetsList extends StatefulWidget {
   @override
@@ -12,6 +13,14 @@ class AssetsList extends StatefulWidget {
 }
 
 class _AssetsListState extends State<AssetsList> {
+  final bloc = AssetBloc();
+
+  @override
+  void dispose() {
+    //bloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 //    return Consumer<AssetData>(
@@ -31,18 +40,23 @@ class _AssetsListState extends State<AssetsList> {
 //      },
 //    );
     return Container(
-      child: FutureBuilder<dynamic>(
-          future: DBProvider.db.getAllAssetsDB(),
+      child: StreamBuilder<dynamic>(
+          stream: bloc.assets,
           builder: (context, snapshot) {
-            //builder: (BuildContext context, AssetData snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
                   Asset asset = snapshot.data[index];
-                  return AssetTile(
-                    assetName: asset.name,
-                    assetPrice: asset.price,
+                  return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(color: Colors.red),
+                    onDismissed: (direction) {
+                      bloc.delete(asset.name);
+                    },
+                    child: AssetTile(
+                      assetName: asset.name,
+                      assetPrice: asset.price,
 //                    longPressDeleteTask: () {
 //                      snapshot.data.deleteAsset(asset);
 //                    },
@@ -54,6 +68,7 @@ class _AssetsListState extends State<AssetsList> {
 //    },
 //    value: item.blocked,
 //    ),
+                    ),
                   );
                 },
               );
