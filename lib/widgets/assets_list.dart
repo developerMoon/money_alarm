@@ -63,11 +63,11 @@ class _AssetsListState extends State<AssetsList> {
                           assetName: asset.name,
                           assetPrice: asset.price,
                           onTapShowNews: () async {
-                            NewsList newsList = NewsList(
-                              assetName: asset.name,
-                            );
                             setState(() {
-                              newsList.getAssetNews();
+                              NewsList newsList = NewsList(
+                                assetName: asset.name,
+                              );
+                              newsList.createState();
                             });
                           }),
                     );
@@ -80,9 +80,15 @@ class _AssetsListState extends State<AssetsList> {
   }
 }
 
-class NewsList extends StatelessWidget {
+class NewsList extends StatefulWidget {
   final String assetName;
   NewsList({this.assetName});
+
+  @override
+  _NewsListState createState() => _NewsListState();
+}
+
+class _NewsListState extends State<NewsList> {
   List news = [];
 
   void getAssetNews() async {
@@ -90,7 +96,7 @@ class NewsList extends StatelessWidget {
     newsApi.init(debugLog: true, apiKey: apiKey);
 
     var headlines = await newsApi.topHeadlines(
-      q: '$assetName',
+      q: '${widget.assetName}',
       language: 'en',
       pageSize: 20,
     );
@@ -105,12 +111,12 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getAssetNews();
-//    if (news.length != 0) {
-    return ListView(
-        children: new List.generate(
-            20, (index) => ListTile(title: Text('${news[index].title}'))));
-//    } else {
-//      return Center(child: CircularProgressIndicator());
-//    }
+    if (news.length != 0) {
+      return ListView(
+          children: new List.generate(
+              20, (index) => ListTile(title: Text('${news[index].title}'))));
+    } else {
+      return Center(child: CircularProgressIndicator());
+    }
   }
 }
