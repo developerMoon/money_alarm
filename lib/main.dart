@@ -24,6 +24,7 @@ class MoneyAlarm extends StatelessWidget {
         DashBoardScreen.id: (context) => DashBoardScreen(),
         NotificationScreen.id: (context) => NotificationScreen(),
       },
+      theme: ThemeData.dark(),
     );
   }
 }

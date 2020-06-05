@@ -13,7 +13,7 @@ class AddAssetScreen extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(20.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            //color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
@@ -26,7 +26,7 @@ class AddAssetScreen extends StatelessWidget {
                 'Add Asset',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.deepPurple,
+                  color: Colors.white,
                   fontSize: 30.0,
                 ),
               ),

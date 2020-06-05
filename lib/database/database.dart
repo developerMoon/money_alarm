@@ -51,8 +51,8 @@ class DBProvider {
 
   getFirstAssetDB() async {
     final db = await database;
-    var res = await db
-        .rawQuery('Select name from "ASSET" order by rowid asc limit 1');
+    var res =
+        await db.rawQuery('Select * from "ASSET" order by rowid asc limit 1');
     print('res  $res');
     return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
   }
@@ -66,6 +66,22 @@ class DBProvider {
     //assetData.setAssets(list);
 
     return list;
+  }
+
+  getAssetListPricesDB() async {
+    final db = await database;
+    var res = await db.query("Asset");
+    String message = "";
+    //AssetData assetData;
+    List<Asset> list =
+        res.isNotEmpty ? res.map((c) => Asset.fromMap(c)).toList() : [];
+    //assetData.setAssets(list);
+
+    for (Asset asset in list) {
+      message = '$message [${asset.name}|${asset.price}]';
+    }
+    print('message: $message');
+    return message;
   }
 
   deleteAssetDB(String assetName) async {

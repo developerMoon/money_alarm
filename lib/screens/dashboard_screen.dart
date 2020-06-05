@@ -29,43 +29,39 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final bloc = AssetBloc();
   AssetData assetData = AssetData();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
   @override
   void initState() {
     super.initState();
 //    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
-//    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//    var android = AndroidInitializationSettings('app_icon');
+
+//    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
 //    var iOS = IOSInitializationSettings();
 //    var initSettings = InitializationSettings(android, iOS);
+//    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+//
 //    flutterLocalNotificationsPlugin.initialize(initSettings,
 //        onSelectNotification: onSelectedNotification);
-//    DBProvider.db.deleteAllDB();
-//    DBProvider.db.addAssetDB(Asset(name: 'TSLA', price: '500'));
-//    DBProvider.db.addAssetDB(Asset(name: 'GOOG', price: '500'));
-//    DBProvider.db.addAssetDB(Asset(name: 'AAPL', price: '500'));
   }
 
-  Future onSelectedNotification(String payload) async {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text('Your payload'),
-        content: Text('payload? : $payload'),
-      ),
-    );
-  }
+//  Future onSelectedNotification(String payload) async {
+//    showDialog(
+//      context: context,
+//      builder: (_) => AlertDialog(
+//        title: Text('Asset List'),
+//        content: Text('Your Asset Selection : $payload'),
+//      ),
+//    );
+//  }
 
-  Future<void> _showNotification() async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0, 'plain title', 'plain body', platformChannelSpecifics,
-        payload: 'item x');
-  }
+//  Future showNotification() async {
+//    var android = AndroidNotificationDetails(
+//        'channelId', 'channelName', 'channelDescription');
+//    var iOS = IOSNotificationDetails();
+//    var platform = NotificationDetails(android, iOS);
+//
+//    await FlutterLocalNotificationsPlugin().show(0, 'title', 'body', platform);
+//  }
 
   @override
   void dispose() {
@@ -98,43 +94,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(
-                    child: Container(
-                      padding: EdgeInsets.only(left: 13, top: 8),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    onPressed: () async {
-                      await _showNotification();
-//                    FlutterLocalNotificationsPlugin
-//                        flutterLocalNotificationsPlugin =
-//                        FlutterLocalNotificationsPlugin();
-//                    var initializationSettingsAndroid =
-//                        AndroidInitializationSettings('app_icon');
-//                    var initializationSettingsIOS = IOSInitializationSettings(
-//                      requestSoundPermission: false,
-//                      requestBadgePermission: false,
-//                      requestAlertPermission: false,
-//                      //onDidReceiveLocalNotification: onSelectNotification,
-//                    );
-//                    var initializationSettings = InitializationSettings(
-//                        initializationSettingsAndroid,
-//                        initializationSettingsIOS);
-//                    await flutterLocalNotificationsPlugin
-//                        .initialize(initializationSettings,
-//                            onSelectNotification: (String payload) async {
-//                      if (payload != null) {
-//                        debugPrint('notification payload: ' + payload);
-//                      }
-//                      //selectNotificationSubject.add(payload);
-//                    });
-                    },
-                  ),
-                ),
+//                Container(
+//                  alignment: Alignment.centerRight,
+//                  child: FlatButton(
+//                    child: Container(
+//                      padding: EdgeInsets.only(left: 13, top: 8),
+//                      child: Icon(
+//                        Icons.add,
+//                        color: Colors.deepPurple,
+//                      ),
+//                    ),
+//                    onPressed: () => showNotification(),
+//                  ),
+//                ),
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
@@ -154,16 +126,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ],
             ),
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0),
-                  ),
-                ),
-                child: AssetsList(),
-              ),
+              child: AssetsList(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

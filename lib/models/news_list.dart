@@ -5,9 +5,11 @@ import 'package:money_alarm/database/database.dart';
 import 'package:newsapi/newsapi.dart';
 import 'secrets.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
+import 'asset.dart';
 
 class NewsList extends StatefulWidget {
   final String assetName;
+
   NewsList({this.assetName});
 
   @override
@@ -21,13 +23,22 @@ class _NewsListState extends State<NewsList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    dynamic name = bloc.getFirstAsset();
-    String firstAsset = name["name"].values;
-    print('asset name!! ${firstAsset}');
-    getAssetNews(firstAsset);
+
+    getAssetNews('GOOG');
+    //getFirstAssetNews();
   }
 
-  void getAssetNews(String assetName) async {
+  //void getFirstAssetNews() async {
+  //dynamic name = await bloc.getFirstAsset();
+  //print('name?? $name  ${name.runtimeType}');
+  //await print('name:: ${name[0].value}');
+
+  //String firstAsset = name;
+  //print('asset name!! ${firstAsset}');
+//    await getAssetNews('GOOG');
+//  }
+
+  Future getAssetNews(String assetName) async {
     var newsApi = NewsApi();
     newsApi.init(debugLog: true, apiKey: apiKey);
 
@@ -37,20 +48,27 @@ class _NewsListState extends State<NewsList> {
       pageSize: 20,
     );
     var headlineList = headlines.articles.toList();
-    for (var headline in headlineList) {
-      print('------ ${headline.title} -----');
-      news.add(headline.title);
-    }
-    print('news length!! : ${news.length}');
+    //news.clear();
+    setState(() {
+      for (var headline in headlineList) {
+        print('------ ${headline.title} -----');
+        news.add(headline.title);
+      }
+      print('news length!! : ${news.length}');
+    });
+    return news;
   }
 
   @override
   Widget build(BuildContext context) {
-    getAssetNews(widget.assetName);
+//    setState(() {
+//      getAssetNews(widget.assetName);
+//    });
+
     if (news.length != 0) {
       return ListView(
-          children: new List.generate(
-              20, (index) => ListTile(title: Text('${news[index].title}'))));
+          children: List.generate(
+              news.length, (index) => ListTile(title: Text('${news[index]}'))));
     } else {
       return Center(child: CircularProgressIndicator());
     }
