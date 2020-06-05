@@ -9,7 +9,7 @@ import 'asset.dart';
 
 class NewsList extends StatefulWidget {
   final String assetName;
-
+  Function getAssetNews;
   NewsList({this.assetName});
 
   @override
@@ -24,19 +24,23 @@ class _NewsListState extends State<NewsList> {
     // TODO: implement initState
     super.initState();
 
-    getAssetNews('GOOG');
-    //getFirstAssetNews();
+    //getAssetNews('GOOG');
+    getFirstAssetNews();
   }
 
-  //void getFirstAssetNews() async {
-  //dynamic name = await bloc.getFirstAsset();
-  //print('name?? $name  ${name.runtimeType}');
-  //await print('name:: ${name[0].value}');
+  void getFirstAssetNews() async {
+    //dynamic name = await bloc.getFirstAsset();
+    //print('name?? $name  ${name.runtimeType}');
+    //await print('name:: ${name[0].value}');
 
-  //String firstAsset = name;
-  //print('asset name!! ${firstAsset}');
+    //String firstAsset = name;
+    //print('asset name!! ${firstAsset}');
 //    await getAssetNews('GOOG');
-//  }
+
+    var list = await DBProvider.db.getAllAssetsDB();
+    print('printed getFirstAssetNews : ${list[0].name}');
+    getAssetNews(list[0].name);
+  }
 
   Future getAssetNews(String assetName) async {
     var newsApi = NewsApi();
@@ -64,7 +68,7 @@ class _NewsListState extends State<NewsList> {
 //    setState(() {
 //      getAssetNews(widget.assetName);
 //    });
-
+    //getAssetNews(widget.assetName);
     if (news.length != 0) {
       return ListView(
           children: List.generate(

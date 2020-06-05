@@ -146,12 +146,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text('Notification'),
                   onPressed: () async {
                     Navigator.pushNamed(context, NotificationScreen.id);
-                    DBProvider.db.addAssetDB(Asset(name: 'TSLA', price: '500'));
-                    Asset selectData = await DBProvider.db.getAssetDB('TSLA');
-                    print(selectData);
-
-                    var list = await DBProvider.db.getAllAssetsDB();
-                    print('printed tsla : ${list[0].name}, ${list[0].price} ');
                   },
                 ),
               ],

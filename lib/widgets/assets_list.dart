@@ -64,9 +64,7 @@ class _AssetsListState extends State<AssetsList> {
                           assetPrice: asset.price,
                           onTapShowNews: () async {
                             NewsList newsList = NewsList(assetName: asset.name);
-//                            setState(() {
-//                                //newsList.updateList
-//                            });
+                            //newsList() =>
                           }),
                     );
                   });
