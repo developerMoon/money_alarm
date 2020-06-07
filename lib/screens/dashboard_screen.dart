@@ -21,9 +21,7 @@ class DashBoardScreen extends StatefulWidget {
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
 
-//class Notification{
 
-//}
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final bloc = AssetBloc();
@@ -34,34 +32,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void initState() {
     super.initState();
 //    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
-
-//    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
-//    var iOS = IOSInitializationSettings();
-//    var initSettings = InitializationSettings(android, iOS);
-//    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//
-//    flutterLocalNotificationsPlugin.initialize(initSettings,
-//        onSelectNotification: onSelectedNotification);
+//    NewsList newsList = NewsList();
+//    newsList.getFirstAssetNews();
   }
 
-//  Future onSelectedNotification(String payload) async {
-//    showDialog(
-//      context: context,
-//      builder: (_) => AlertDialog(
-//        title: Text('Asset List'),
-//        content: Text('Your Asset Selection : $payload'),
-//      ),
-//    );
-//  }
 
-//  Future showNotification() async {
-//    var android = AndroidNotificationDetails(
-//        'channelId', 'channelName', 'channelDescription');
-//    var iOS = IOSNotificationDetails();
-//    var platform = NotificationDetails(android, iOS);
-//
-//    await FlutterLocalNotificationsPlugin().show(0, 'title', 'body', platform);
-//  }
 
   @override
   void dispose() {
@@ -161,7 +136,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
             Expanded(
-              child: NewsList(),
+              child: NewsList(assetName: 'DIS'),
             ),
           ],
         ),

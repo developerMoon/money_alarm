@@ -8,24 +8,26 @@ import 'package:money_alarm/database/asset_bloc.dart';
 import 'asset.dart';
 
 class NewsList extends StatefulWidget {
-  final String assetName;
-  final Function getAssetNews;
-  NewsList({this.assetName, this.getAssetNews});
 
+  final String assetName;
+//  final ValueChanged<String> onChanged;
+  NewsList({this.assetName});
   @override
   _NewsListState createState() => _NewsListState();
 }
 
 class _NewsListState extends State<NewsList> {
-  List news = [];
+  static List news = [];
+
   final bloc = AssetBloc();
+
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
+    widget.assetName == null ? getFirstAssetNews() : getAssetNews(widget.assetName);
 
-    //getAssetNews('GOOG');
-    getFirstAssetNews();
   }
 
   void getFirstAssetNews() async {
@@ -42,7 +44,10 @@ class _NewsListState extends State<NewsList> {
     getAssetNews(list[0].name);
   }
 
-  Future getAssetNews(String assetName) async {
+
+
+   getAssetNews(String assetName) async {
+
     var newsApi = NewsApi();
     newsApi.init(debugLog: true, apiKey: apiKey);
 
@@ -52,14 +57,13 @@ class _NewsListState extends State<NewsList> {
       pageSize: 20,
     );
     var headlineList = headlines.articles.toList();
-    //news.clear();
-    setState(() {
+    //news.clear();setState(() {
       for (var headline in headlineList) {
         print('------ ${headline.title} -----');
         news.add(headline.title);
       }
       print('news length!! : ${news.length}');
-    });
+
     return news;
   }
 
@@ -69,8 +73,12 @@ class _NewsListState extends State<NewsList> {
 //      getAssetNews(widget.assetName);
 //    });
     //getAssetNews(widget.assetName);
-    if (news.length != 0) {
+
+
+    if (news.length > 0) {
+
       return ListView(
+
           children: List.generate(
               news.length, (index) => ListTile(title: Text('${news[index]}'))));
     } else {
