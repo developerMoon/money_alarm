@@ -4,7 +4,7 @@ import 'package:money_alarm/models/asset_data.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
 
 class AddAssetScreen extends StatelessWidget {
-  String newAssetName;
+  static String newAssetName;
   final bloc = AssetBloc();
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,6 @@ class AddAssetScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 onChanged: (newText) {
                   newAssetName = newText;
-
-                  //FocusScope.of(context).requestFocus(FocusNode());
                 },
               ),
               FlatButton(

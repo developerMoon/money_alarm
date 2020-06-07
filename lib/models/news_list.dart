@@ -9,8 +9,8 @@ import 'asset.dart';
 
 class NewsList extends StatefulWidget {
   final String assetName;
-  Function getAssetNews;
-  NewsList({this.assetName});
+  final Function getAssetNews;
+  NewsList({this.assetName, this.getAssetNews});
 
   @override
   _NewsListState createState() => _NewsListState();
