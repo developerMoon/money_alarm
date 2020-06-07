@@ -5,52 +5,52 @@ import 'package:money_alarm/models/asset.dart';
 import 'dart:collection';
 import 'package:money_alarm/database/database.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:money_alarm/database/asset_bloc.dart';
 
-class AssetData extends ChangeNotifier {
-  List<Asset> _assets = [
-    Asset(name: 'GOOG', price: 'waiting'),
-    Asset(name: 'AMZN', price: 'waiting'),
-    Asset(name: 'AAPL', price: 'waiting'),
-  ];
+//class AssetData extends ChangeNotifier {
+class AssetData {
+  List<Asset> _assets = [];
+  final bloc = AssetBloc();
 
   UnmodifiableListView<Asset> get assets {
     return UnmodifiableListView(_assets);
   }
 
-  void addAsset(String newAssetName) async {
-    final Map<String, Map<String, String>> quotePrice =
-        await FinanceQuote.getPrice(
-            quoteProvider: QuoteProvider.yahoo,
-            symbols: <String>[newAssetName]);
-
-    final asset = Asset(
-        name: newAssetName, price: '${quotePrice[newAssetName]['price']}');
-    _assets.add(asset);
-    DBProvider.db.addAssetDB(asset);
-    notifyListeners();
+  void addAsset(BuildContext context, String newAssetName) async {
+//    final Map<String, Map<String, String>> quotePrice =
+//        await FinanceQuote.getPrice(
+//            quoteProvider: QuoteProvider.yahoo,
+//            symbols: <String>[newAssetName]);
+//
+//    final asset = Asset(
+//        name: newAssetName, price: '${quotePrice[newAssetName]['price']}');
+//    //_assets.add(asset);
+//    bloc.add(asset);
+//    notifyListeners();
   }
 
-  void deleteAsset(Asset asset) {
-    _assets.remove(asset);
-    notifyListeners();
-  }
+//  void deleteAsset(Asset asset) {
+//    _assets.remove(asset);
+//    notifyListeners();
+//  }
 
   int get assetCount {
     return _assets.length;
   }
 
-  void setAssetPrice(BuildContext context) async {
-    for (var i = 0; i < _assets.length; i++) {
-      final Map<String, Map<String, String>> quotePrice =
-          await FinanceQuote.getPrice(
-              quoteProvider: QuoteProvider.yahoo,
-              symbols: <String>[_assets[i].name]);
-      print(
-          'setAssetPrice - Current market price for ${_assets[i].name}: ${quotePrice[_assets[i].name]['price']}.');
-      _assets[i].price = quotePrice[_assets[i].name]['price'];
-      notifyListeners();
-    }
-  }
+//  void setAssetPrice(BuildContext context) async {
+//    for (var i = 0; i < _assets.length; i++) {
+//      final Map<String, Map<String, String>> quotePrice =
+//          await FinanceQuote.getPrice(
+//              quoteProvider: QuoteProvider.yahoo,
+//              symbols: <String>[_assets[i].name]);
+//      print(
+//          'setAssetPrice - Current market price for ${_assets[i].name}: ${quotePrice[_assets[i].name]['price']}.');
+//      _assets[i].price = quotePrice[_assets[i].name]['price'];
+//      DBProvider.db.updateAssetDB(_assets[i]);
+//      notifyListeners();
+//    }
+//  }
 }
 
 showAlertDialog(BuildContext context) {

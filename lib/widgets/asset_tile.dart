@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 class AssetTile extends StatelessWidget {
   final String assetName;
   String assetPrice;
-  final Function longPressDeleteTask;
-
-  AssetTile({this.assetName, this.assetPrice, this.longPressDeleteTask});
+  final Function onTapShowNews;
+  AssetTile({this.assetName, this.assetPrice, this.onTapShowNews});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class AssetTile extends StatelessWidget {
       trailing: Text(
         assetPrice,
       ),
-      onLongPress: longPressDeleteTask,
+      onTap: onTapShowNews,
     );
   }
 }

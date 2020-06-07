@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
+import 'package:money_alarm/database/asset_bloc.dart';
 
 class AddAssetScreen extends StatelessWidget {
-  String newAssetName;
+  static String newAssetName;
+  final bloc = AssetBloc();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +13,7 @@ class AddAssetScreen extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(20.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            //color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
@@ -24,7 +26,7 @@ class AddAssetScreen extends StatelessWidget {
                 'Add Asset',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.lightBlueAccent,
+                  color: Colors.white,
                   fontSize: 30.0,
                 ),
               ),
@@ -33,7 +35,6 @@ class AddAssetScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 onChanged: (newText) {
                   newAssetName = newText;
-                  //FocusScope.of(context).requestFocus(FocusNode());
                 },
               ),
               FlatButton(
@@ -43,11 +44,15 @@ class AddAssetScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                color: Colors.lightBlueAccent,
+                color: Colors.deepPurple,
                 onPressed: () {
                   //add task
-                  Provider.of<AssetData>(context, listen: false)
-                      .addAsset(newAssetName);
+//                  Provider.of<AssetData>(context, listen: false)
+//                      .addAsset(context, newAssetName);
+                  Provider.of<AssetBloc>(context, listen: false)
+                      .add(newAssetName);
+                  //bloc.add(newAssetName);
+                  //.addAsset(context, newAssetName);
 
                   Navigator.pop(context);
                 },

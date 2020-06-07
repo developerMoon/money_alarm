@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:money_alarm/models/asset.dart';
+import 'package:money_alarm/models/asset_data.dart';
 
 class DBProvider {
   DBProvider._();
@@ -34,10 +35,62 @@ class DBProvider {
     return res;
   }
 
+  updateAssetDB(Asset newAsset) async {
+    final db = await database;
+    var res = await db.update("Asset", newAsset.toMap(),
+        where: 'name = ?', whereArgs: [newAsset.name]);
+    return res;
+  }
+
   getAssetDB(String assetName) async {
     final db = await database;
     var res =
         await db.query("Asset", where: "name = ?", whereArgs: [assetName]);
     return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
+  }
+
+  getFirstAssetDB() async {
+    final db = await database;
+    var res =
+        await db.rawQuery('Select * from "ASSET" order by rowid asc limit 1');
+    print('res  $res');
+    return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
+  }
+
+  getAllAssetsDB() async {
+    final db = await database;
+    var res = await db.query("Asset");
+    //AssetData assetData;
+    List<Asset> list =
+        res.isNotEmpty ? res.map((c) => Asset.fromMap(c)).toList() : [];
+    //assetData.setAssets(list);
+
+    return list;
+  }
+
+  getAssetListPricesDB() async {
+    final db = await database;
+    var res = await db.query("Asset");
+    String message = "";
+    //AssetData assetData;
+    List<Asset> list =
+        res.isNotEmpty ? res.map((c) => Asset.fromMap(c)).toList() : [];
+    //assetData.setAssets(list);
+
+    for (Asset asset in list) {
+      message = '$message [${asset.name}|${asset.price}]';
+    }
+    print('message: $message');
+    return message;
+  }
+
+  deleteAssetDB(String assetName) async {
+    final db = await database;
+    db.delete("Asset", where: "name = ?", whereArgs: [assetName]);
+  }
+
+  deleteAllDB() async {
+    final db = await database;
+    db.rawDelete("Delete from Asset");
   }
 }
