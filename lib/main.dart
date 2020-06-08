@@ -6,12 +6,14 @@ import 'package:money_alarm/screens/dashboard_screen.dart';
 import 'package:money_alarm/screens/notification_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset.dart';
+import 'package:money_alarm/models/news_data.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<AssetBloc>(create: (context) => AssetBloc()),
     ChangeNotifierProvider<NotificationData>(
         create: (context) => NotificationData()),
+    ChangeNotifierProvider<NewsData>(create: (context) => NewsData()),
   ], child: MoneyAlarm()));
 }
 

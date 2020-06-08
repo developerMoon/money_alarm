@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
 import 'package:money_alarm/models/asset.dart';
+import 'package:flutter/cupertino.dart';
 
 class NotificationScreen extends StatefulWidget {
   static const id = 'notification_screen';
@@ -27,12 +28,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
     // TODO: implement initState
     super.initState();
     var android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOS = IOSInitializationSettings();
+    var iOS = IOSInitializationSettings(
+//        requestAlertPermission: false,
+//        requestBadgePermission: false,
+//        requestSoundPermission: false,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var initSettings = InitializationSettings(android, iOS);
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     flutterLocalNotificationsPlugin.initialize(initSettings,
         onSelectNotification: onSelectedNotification);
+    requestPermission();
+  }
+
+  requestPermission() async {
+    var result = await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   Future onSelectedNotification(String payload) async {
@@ -41,6 +58,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
       builder: (_) => AlertDialog(
         title: Text('Asset List'),
         content: Text('Your Asset Selection : $payload'),
+      ),
+    );
+  }
+
+  Future onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text('Ok'),
+            onPressed: () async {
+//              Navigator.of(context, rootNavigator: true).pop();
+//              await Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                  builder: (context) => SecondScreen(payload),
+//                ),
+//              );
+            },
+          )
+        ],
       ),
     );
   }
@@ -54,7 +98,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var time = Time(14, 34, 0);
+          //var time = Time(14, 34, 0);
           var androidPlatformChannelSpecifics = AndroidNotificationDetails(
               'repeatDailyAtTime channel id',
               'repeatDailyAtTime channel name',
@@ -78,13 +122,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 payload: message);
           }, locale: LocaleType.ko);
 
-//          await flutterLocalNotificationsPlugin.showDailyAtTime(
-//              0,
-//              'show daily title',
-//              'Daily notification shown at approximately ${time.toString()}',
-//              time,
-//              platformChannelSpecifics);
-//
+          var time = Time(22, 12, 30);
+
+          await flutterLocalNotificationsPlugin.showDailyAtTime(
+              0,
+              'show daily title',
+              'Daily notification shown at approximately $time}',
+              time,
+              platformChannelSpecifics);
         },
         backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),

@@ -12,7 +12,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'package:money_alarm/database//asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
-import 'package:money_alarm/models/news_list.dart';
+import 'package:money_alarm/widgets/news_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -21,13 +21,11 @@ class DashBoardScreen extends StatefulWidget {
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
 
-
-
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final bloc = AssetBloc();
   AssetData assetData = AssetData();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
+  String selectedAssetName;
   @override
   void initState() {
     super.initState();
@@ -35,8 +33,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 //    NewsList newsList = NewsList();
 //    newsList.getFirstAssetNews();
   }
-
-
 
   @override
   void dispose() {
@@ -101,7 +97,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ],
             ),
             Expanded(
-              child: AssetsList(),
+              child: AssetsList(
+                selectedAssetName: selectedAssetName,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +134,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
             Expanded(
-              child: NewsList(assetName: 'DIS'),
+              child: NewsList(
+                  //assetName: selectedAssetName,
+                  ),
             ),
           ],
         ),

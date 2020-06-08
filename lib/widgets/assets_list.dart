@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:money_alarm/models/news_list.dart';
+import 'package:money_alarm/models/news_data.dart';
+import 'package:money_alarm/widgets/news_list.dart';
 import 'package:money_alarm/widgets/asset_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
@@ -13,6 +14,8 @@ import 'package:newsapi/newsapi.dart';
 import 'package:money_alarm/models/secrets.dart';
 
 class AssetsList extends StatefulWidget {
+  String selectedAssetName;
+  AssetsList({this.selectedAssetName});
   @override
   _AssetsListState createState() => _AssetsListState();
 }
@@ -63,7 +66,16 @@ class _AssetsListState extends State<AssetsList> {
                           assetName: asset.name,
                           assetPrice: asset.price,
                           onTapShowNews: () async {
-                            NewsList newsList = NewsList(assetName: asset.name);
+                            widget.selectedAssetName = asset.name;
+                            print('AssetTile : ${widget.selectedAssetName}');
+
+                            //setState(() {
+                            NewsData newsData = NewsData();
+                            newsData.getAssetNews(asset.name);
+
+                            return NewsList();
+
+                            //NewsList
                             //newsList() =>
                           }),
                     );
