@@ -12,6 +12,7 @@ import 'package:money_alarm/database/database.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
 import 'package:money_alarm/models/secrets.dart';
+import 'package:provider/provider.dart';
 
 class AssetsList extends StatefulWidget {
   String selectedAssetName;
@@ -70,10 +71,11 @@ class _AssetsListState extends State<AssetsList> {
                             print('AssetTile : ${widget.selectedAssetName}');
 
                             //setState(() {
-                            NewsData newsData = NewsData();
-                            newsData.getAssetNews(asset.name);
-
-                            return NewsList();
+//                            NewsData newsData = NewsData();
+//                            newsData.getAssetNews(asset.name);
+                            Provider.of<NewsData>(context, listen: false)
+                                .getAssetNews(asset.name);
+                            //return NewsList();
 
                             //NewsList
                             //newsList() =>

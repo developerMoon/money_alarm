@@ -13,6 +13,7 @@ import 'package:money_alarm/models/asset.dart';
 import 'package:money_alarm/database//asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
 import 'package:money_alarm/widgets/news_list.dart';
+import 'package:money_alarm/models/news_data.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -29,9 +30,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-//    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
-//    NewsList newsList = NewsList();
-//    newsList.getFirstAssetNews();
+    Provider.of<NewsData>(context, listen: false).getFirstAssetNews();
   }
 
   @override

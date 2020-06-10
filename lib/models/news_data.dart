@@ -15,6 +15,7 @@ class NewsData extends ChangeNotifier {
   }
 
   void getFirstAssetNews() async {
+    _news.clear();
     var list = await DBProvider.db.getAllAssetsDB();
     print('printed getFirstAssetNews : ${list[0].name}');
     getAssetNews(list[0].name);
@@ -22,6 +23,7 @@ class NewsData extends ChangeNotifier {
   }
 
   getAssetNews(String assetName) async {
+    _news.clear();
     var newsApi = NewsApi();
     newsApi.init(debugLog: true, apiKey: apiKey);
 
