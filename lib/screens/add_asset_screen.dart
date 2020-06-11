@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:money_alarm/database/database.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
+import 'package:finance_quote/finance_quote.dart';
+import 'package:money_alarm/models/asset.dart';
 
 class AddAssetScreen extends StatelessWidget {
   static String newAssetName;
@@ -45,13 +50,23 @@ class AddAssetScreen extends StatelessWidget {
                   ),
                 ),
                 color: Colors.deepPurple,
-                onPressed: () {
+                onPressed: () async {
                   //add task
-//                  Provider.of<AssetData>(context, listen: false)
-//                      .addAsset(context, newAssetName);
-                  Provider.of<AssetBloc>(context, listen: false)
-                      .add(newAssetName);
-                  //bloc.add(newAssetName);
+                  print('onpressed add $newAssetName');
+//
+//                  final Map<String, Map<String, String>> quotePrice =
+//                      await FinanceQuote.getPrice(
+//                          quoteProvider: QuoteProvider.yahoo,
+//                          symbols: <String>[newAssetName]);
+//
+//                  final asset = Asset(
+//                      name: newAssetName,
+//                      price: '${quotePrice[newAssetName]['price']}');
+//                  DBProvider.db.addAssetDB(asset);
+                  bloc.add(newAssetName);
+
+                  //bloc.getAssets();
+                  //StreamController<>.broadcast
                   //.addAsset(context, newAssetName);
 
                   Navigator.pop(context);

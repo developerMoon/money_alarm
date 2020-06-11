@@ -15,8 +15,6 @@ import 'package:money_alarm/models/secrets.dart';
 import 'package:provider/provider.dart';
 
 class AssetsList extends StatefulWidget {
-  String selectedAssetName;
-  AssetsList({this.selectedAssetName});
   @override
   _AssetsListState createState() => _AssetsListState();
 }
@@ -67,18 +65,8 @@ class _AssetsListState extends State<AssetsList> {
                           assetName: asset.name,
                           assetPrice: asset.price,
                           onTapShowNews: () async {
-                            widget.selectedAssetName = asset.name;
-                            print('AssetTile : ${widget.selectedAssetName}');
-
-                            //setState(() {
-//                            NewsData newsData = NewsData();
-//                            newsData.getAssetNews(asset.name);
                             Provider.of<NewsData>(context, listen: false)
                                 .getAssetNews(asset.name);
-                            //return NewsList();
-
-                            //NewsList
-                            //newsList() =>
                           }),
                     );
                   });

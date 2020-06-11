@@ -24,9 +24,7 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final bloc = AssetBloc();
-  AssetData assetData = AssetData();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  String selectedAssetName;
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +35,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    bloc.dispose();
+    //bloc.dispose();
   }
 
   @override
@@ -59,24 +57,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     padding: EdgeInsets.only(left: 13, top: 8),
                     child: Text(
                       'Watchlist',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.grey),
                     ),
                   ),
                 ),
-//                Container(
-//                  alignment: Alignment.centerRight,
-//                  child: FlatButton(
-//                    child: Container(
-//                      padding: EdgeInsets.only(left: 13, top: 8),
-//                      child: Icon(
-//                        Icons.add,
-//                        color: Colors.deepPurple,
-//                      ),
-//                    ),
-//                    onPressed: () => showNotification(),
-//                  ),
-//                ),
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
@@ -96,14 +83,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ],
             ),
             Expanded(
-              child: AssetsList(
-                selectedAssetName: selectedAssetName,
-              ),
+              child: AssetsList(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
+                    color: Colors.deepPurple,
                     child: Text('Add Asset'),
                     onPressed: () {
                       showModalBottomSheet(
@@ -115,6 +101,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   width: 20,
                 ),
                 RaisedButton(
+                  color: Colors.deepPurple,
                   child: Text('Notification'),
                   onPressed: () async {
                     Navigator.pushNamed(context, NotificationScreen.id);
@@ -125,17 +112,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: EdgeInsets.only(left: 13, top: 8),
+                padding: EdgeInsets.only(left: 13, top: 5, bottom: 8),
                 child: Text(
                   'News',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.grey),
                 ),
               ),
             ),
             Expanded(
-              child: NewsList(
-                  //assetName: selectedAssetName,
-                  ),
+              child: NewsList(),
             ),
           ],
         ),

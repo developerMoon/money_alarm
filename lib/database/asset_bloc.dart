@@ -3,6 +3,7 @@ import 'package:money_alarm/database/database.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'dart:async';
 import 'package:finance_quote/finance_quote.dart';
+import 'package:provider/provider.dart';
 
 class AssetBloc extends ChangeNotifier {
   AssetBloc() {

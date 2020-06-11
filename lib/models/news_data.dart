@@ -27,7 +27,7 @@ class NewsData extends ChangeNotifier {
     var newsApi = NewsApi();
     newsApi.init(debugLog: true, apiKey: apiKey);
 
-    var headlines = await newsApi.topHeadlines(
+    var headlines = await newsApi.everything(
       q: '$assetName',
       language: 'en',
       pageSize: 20,
