@@ -4,7 +4,7 @@ import 'package:money_alarm/database/database.dart';
 import 'secrets.dart';
 
 class NewsData extends ChangeNotifier {
-  List<String> _news = [];
+  Map<String, String> _news = Map();
 
   get news {
     return (_news);
@@ -27,18 +27,18 @@ class NewsData extends ChangeNotifier {
     var newsApi = NewsApi();
     newsApi.init(debugLog: true, apiKey: apiKey);
 
-    var headlines = await newsApi.everything(
+    var newsObj = await newsApi.everything(
       q: '$assetName',
       language: 'en',
       pageSize: 20,
     );
-    var headlineList = headlines.articles.toList();
+    var newsLists = newsObj.articles.toList();
     //news.clear();setState(() {
-    for (var headline in headlineList) {
-      print('------ ${headline.title} -----');
-      news.add(headline.title);
+    for (var newsList in newsLists) {
+      //print('------ ${newsList.url} -----');
+      _news[newsList.title] = newsList.url;
     }
-    print('news length!! : ${news.length}');
+    print('news length!! : ${_news.length}');
 
     notifyListeners();
   }

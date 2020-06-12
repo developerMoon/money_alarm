@@ -78,9 +78,9 @@ class DBProvider {
     //assetData.setAssets(list);
 
     for (Asset asset in list) {
-      message = '$message [${asset.name}|${asset.price}]';
+      message = '$message ${asset.name} : ${asset.price} \n';
     }
-    print('message: $message');
+    //print('message: $message');
     return message;
   }
 
