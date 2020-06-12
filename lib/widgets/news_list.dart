@@ -19,7 +19,7 @@ class NewsList extends StatelessWidget {
             String newsUrl = newsData.news.values.elementAt(index);
             return ListTile(
               title: Text(newsTitle),
-              //onTap: _launchURL(newsUrl),
+              onTap: () => _launchURL(newsUrl),
             );
           },
         );
