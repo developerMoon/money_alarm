@@ -34,8 +34,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     //bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,9 +75,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ),
                     onPressed: () {
-//                      Provider.of<AssetData>(context, listen: false)
-//                          .setAssetPrice(context);
-                      bloc.update();
+                      setState(() {
+                        bloc.update();
+                      });
                     },
                   ),
                 ),

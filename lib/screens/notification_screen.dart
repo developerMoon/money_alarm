@@ -74,9 +74,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
             String message = await DBProvider.db.getAssetListPricesDB();
 
             int hour = int.parse(formattedTime.substring(0, 2));
-
             int minute = int.parse(formattedTime.substring(3));
-            print('timeformat $hour $minute');
+            //print('timeformat $hour $minute');
             var notificationTime = Time(hour, minute, 00);
 
             await flutterLocalNotificationsPlugin.showDailyAtTime(

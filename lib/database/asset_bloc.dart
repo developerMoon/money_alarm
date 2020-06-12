@@ -40,6 +40,7 @@ class AssetBloc extends ChangeNotifier {
     final asset = Asset(
         name: newAssetName, price: '${quotePrice[newAssetName]['price']}');
     DBProvider.db.addAssetDB(asset);
+
     getAssets();
   }
 

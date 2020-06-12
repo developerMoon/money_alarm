@@ -19,7 +19,7 @@ class NotificationsList extends StatelessWidget {
                 ),
               ),
               onLongPress: () {
-                notificationData.deletNotification(index);
+                notificationData.deleteNotification(index);
               },
             );
           },

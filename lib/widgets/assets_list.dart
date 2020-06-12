@@ -47,11 +47,15 @@ class _AssetsListState extends State<AssetsList> {
 //      },
 //    );
     return Container(
-      child: StreamBuilder<dynamic>(
-          stream: bloc.assets,
+      child: FutureBuilder<dynamic>(
+          //StreamBuilder<dynamic>(
+          //stream: bloc.assets,
+          //builder: (context, snapshot) {
+          future: DBProvider.db.getAllAssetsDB(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
+                  key: UniqueKey(),
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     Asset asset = snapshot.data[index];

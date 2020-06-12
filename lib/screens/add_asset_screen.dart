@@ -8,9 +8,24 @@ import 'package:money_alarm/database/asset_bloc.dart';
 import 'package:finance_quote/finance_quote.dart';
 import 'package:money_alarm/models/asset.dart';
 
-class AddAssetScreen extends StatelessWidget {
+class AddAssetScreen extends StatefulWidget {
   static String newAssetName;
+
+  @override
+  _AddAssetScreenState createState() => _AddAssetScreenState();
+}
+
+class _AddAssetScreenState extends State<AddAssetScreen> {
   final bloc = AssetBloc();
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +53,9 @@ class AddAssetScreen extends StatelessWidget {
               TextField(
                 autofocus: true, //keyboard enabled, focusted
                 textAlign: TextAlign.center,
+                controller: textController,
                 onChanged: (newText) {
-                  newAssetName = newText;
+                  AddAssetScreen.newAssetName = newText;
                 },
               ),
               FlatButton(
@@ -50,24 +66,12 @@ class AddAssetScreen extends StatelessWidget {
                   ),
                 ),
                 color: Colors.deepPurple,
-                onPressed: () async {
+                onPressed: () {
                   //add task
-                  print('onpressed add $newAssetName');
-//
-//                  final Map<String, Map<String, String>> quotePrice =
-//                      await FinanceQuote.getPrice(
-//                          quoteProvider: QuoteProvider.yahoo,
-//                          symbols: <String>[newAssetName]);
-//
-//                  final asset = Asset(
-//                      name: newAssetName,
-//                      price: '${quotePrice[newAssetName]['price']}');
-//                  DBProvider.db.addAssetDB(asset);
-                  bloc.add(newAssetName);
-
-                  //bloc.getAssets();
-                  //StreamController<>.broadcast
-                  //.addAsset(context, newAssetName);
+                  print('onpressed add ${AddAssetScreen.newAssetName}');
+                  setState(() {
+                    bloc.add(AddAssetScreen.newAssetName);
+                  });
 
                   Navigator.pop(context);
                 },
