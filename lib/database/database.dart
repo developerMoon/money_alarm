@@ -42,28 +42,27 @@ class DBProvider {
     return res;
   }
 
-  getAssetDB(String assetName) async {
-    final db = await database;
-    var res =
-        await db.query("Asset", where: "name = ?", whereArgs: [assetName]);
-    return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
-  }
+//  getAssetDB(String assetName) async {
+//    final db = await database;
+//    var res =
+//        await db.query("Asset", where: "name = ?", whereArgs: [assetName]);
+//    return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
+//  }
 
-  getFirstAssetDB() async {
-    final db = await database;
-    var res =
-        await db.rawQuery('Select * from "ASSET" order by rowid asc limit 1');
-    print('res  $res');
-    return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
-  }
+//  getFirstAssetDB() async {
+//    final db = await database;
+//    var res =
+//        await db.rawQuery('Select * from "ASSET" order by rowid asc limit 1');
+//    print('res  $res');
+//    return res.isNotEmpty ? Asset.fromMap(res.first) : Null;
+//  }
 
   getAllAssetsDB() async {
     final db = await database;
     var res = await db.query("Asset");
-    //AssetData assetData;
+
     List<Asset> list =
         res.isNotEmpty ? res.map((c) => Asset.fromMap(c)).toList() : [];
-    //assetData.setAssets(list);
 
     return list;
   }

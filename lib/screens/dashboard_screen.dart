@@ -77,6 +77,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     onPressed: () {
 //                      Provider.of<AssetData>(context, listen: false)
 //                          .setAssetPrice(context);
+                      bloc.update();
                     },
                   ),
                 ),

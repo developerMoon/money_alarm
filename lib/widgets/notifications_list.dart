@@ -15,7 +15,7 @@ class NotificationsList extends StatelessWidget {
               title: Text(
                 '${notificationData.notifications[index]}',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 30,
                 ),
               ),
               onLongPress: () {
