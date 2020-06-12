@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
 import 'package:money_alarm/models/asset.dart';
+import 'package:flutter/cupertino.dart';
 
 class NotificationScreen extends StatefulWidget {
   static const id = 'notification_screen';
@@ -26,7 +27,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var android = AndroidInitializationSettings('@mipmap/money_icon');
     var iOS = IOSInitializationSettings();
     var initSettings = InitializationSettings(android, iOS);
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -39,8 +40,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Asset List'),
-        content: Text('Your Asset Selection : $payload'),
+        title: Text('Watchlist'),
+        content: Text('$payload'),
       ),
     );
   }
@@ -54,7 +55,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var time = Time(14, 34, 0);
           var androidPlatformChannelSpecifics = AndroidNotificationDetails(
               'repeatDailyAtTime channel id',
               'repeatDailyAtTime channel name',
@@ -72,19 +72,20 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 .addNotification(formattedTime);
 
             String message = await DBProvider.db.getAssetListPricesDB();
-            print('messasge in notification: $message');
-            await flutterLocalNotificationsPlugin.show(
-                0, 'Your Assetlist Prices', message, platformChannelSpecifics,
+
+            int hour = int.parse(formattedTime.substring(0, 2));
+            int minute = int.parse(formattedTime.substring(3));
+            //print('timeformat $hour $minute');
+            var notificationTime = Time(hour, minute, 00);
+
+            await flutterLocalNotificationsPlugin.showDailyAtTime(
+                0,
+                'Your Assetlist Prices',
+                message,
+                notificationTime,
+                platformChannelSpecifics,
                 payload: message);
           }, locale: LocaleType.ko);
-
-//          await flutterLocalNotificationsPlugin.showDailyAtTime(
-//              0,
-//              'show daily title',
-//              'Daily notification shown at approximately ${time.toString()}',
-//              time,
-//              platformChannelSpecifics);
-//
         },
         backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),

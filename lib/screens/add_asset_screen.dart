@@ -1,11 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:money_alarm/database/database.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
+import 'package:finance_quote/finance_quote.dart';
+import 'package:money_alarm/models/asset.dart';
 
-class AddAssetScreen extends StatelessWidget {
+class AddAssetScreen extends StatefulWidget {
   static String newAssetName;
+
+  @override
+  _AddAssetScreenState createState() => _AddAssetScreenState();
+}
+
+class _AddAssetScreenState extends State<AddAssetScreen> {
   final bloc = AssetBloc();
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +53,9 @@ class AddAssetScreen extends StatelessWidget {
               TextField(
                 autofocus: true, //keyboard enabled, focusted
                 textAlign: TextAlign.center,
+                controller: textController,
                 onChanged: (newText) {
-                  newAssetName = newText;
+                  AddAssetScreen.newAssetName = newText;
                 },
               ),
               FlatButton(
@@ -47,12 +68,10 @@ class AddAssetScreen extends StatelessWidget {
                 color: Colors.deepPurple,
                 onPressed: () {
                   //add task
-//                  Provider.of<AssetData>(context, listen: false)
-//                      .addAsset(context, newAssetName);
-                  Provider.of<AssetBloc>(context, listen: false)
-                      .add(newAssetName);
-                  //bloc.add(newAssetName);
-                  //.addAsset(context, newAssetName);
+                  print('onpressed add ${AddAssetScreen.newAssetName}');
+                  setState(() {
+                    bloc.add(AddAssetScreen.newAssetName);
+                  });
 
                   Navigator.pop(context);
                 },

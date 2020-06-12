@@ -12,7 +12,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:money_alarm/models/asset.dart';
 import 'package:money_alarm/database//asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
-import 'package:money_alarm/models/news_list.dart';
+import 'package:money_alarm/widgets/news_list.dart';
+import 'package:money_alarm/models/news_data.dart';
 
 class DashBoardScreen extends StatefulWidget {
   static const id = 'dashboard_screen';
@@ -21,53 +22,20 @@ class DashBoardScreen extends StatefulWidget {
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
 
-//class Notification{
-
-//}
-
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final bloc = AssetBloc();
-  AssetData assetData = AssetData();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   @override
   void initState() {
     super.initState();
-//    Provider.of<AssetData>(context, listen: false).setAssetPrice(context);
-
-//    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
-//    var iOS = IOSInitializationSettings();
-//    var initSettings = InitializationSettings(android, iOS);
-//    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//
-//    flutterLocalNotificationsPlugin.initialize(initSettings,
-//        onSelectNotification: onSelectedNotification);
+    Provider.of<NewsData>(context, listen: false).getFirstAssetNews();
   }
-
-//  Future onSelectedNotification(String payload) async {
-//    showDialog(
-//      context: context,
-//      builder: (_) => AlertDialog(
-//        title: Text('Asset List'),
-//        content: Text('Your Asset Selection : $payload'),
-//      ),
-//    );
-//  }
-
-//  Future showNotification() async {
-//    var android = AndroidNotificationDetails(
-//        'channelId', 'channelName', 'channelDescription');
-//    var iOS = IOSNotificationDetails();
-//    var platform = NotificationDetails(android, iOS);
-//
-//    await FlutterLocalNotificationsPlugin().show(0, 'title', 'body', platform);
-//  }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    //bloc.dispose();
     super.dispose();
-    bloc.dispose();
   }
 
   @override
@@ -89,24 +57,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     padding: EdgeInsets.only(left: 13, top: 8),
                     child: Text(
                       'Watchlist',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.grey),
                     ),
                   ),
                 ),
-//                Container(
-//                  alignment: Alignment.centerRight,
-//                  child: FlatButton(
-//                    child: Container(
-//                      padding: EdgeInsets.only(left: 13, top: 8),
-//                      child: Icon(
-//                        Icons.add,
-//                        color: Colors.deepPurple,
-//                      ),
-//                    ),
-//                    onPressed: () => showNotification(),
-//                  ),
-//                ),
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
@@ -118,8 +75,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ),
                     onPressed: () {
-//                      Provider.of<AssetData>(context, listen: false)
-//                          .setAssetPrice(context);
+                      setState(() {
+                        bloc.update();
+                      });
                     },
                   ),
                 ),
@@ -132,6 +90,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
+                    color: Colors.deepPurple,
                     child: Text('Add Asset'),
                     onPressed: () {
                       showModalBottomSheet(
@@ -143,6 +102,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   width: 20,
                 ),
                 RaisedButton(
+                  color: Colors.deepPurple,
                   child: Text('Notification'),
                   onPressed: () async {
                     Navigator.pushNamed(context, NotificationScreen.id);
@@ -153,10 +113,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: EdgeInsets.only(left: 13, top: 8),
+                padding: EdgeInsets.only(left: 13, top: 5, bottom: 8),
                 child: Text(
                   'News',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.grey),
                 ),
               ),
             ),

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:money_alarm/models/news_list.dart';
+import 'package:money_alarm/models/news_data.dart';
+import 'package:money_alarm/widgets/news_list.dart';
 import 'package:money_alarm/widgets/asset_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:money_alarm/models/asset_data.dart';
@@ -11,6 +12,7 @@ import 'package:money_alarm/database/database.dart';
 import 'package:money_alarm/database/asset_bloc.dart';
 import 'package:newsapi/newsapi.dart';
 import 'package:money_alarm/models/secrets.dart';
+import 'package:provider/provider.dart';
 
 class AssetsList extends StatefulWidget {
   @override
@@ -45,11 +47,15 @@ class _AssetsListState extends State<AssetsList> {
 //      },
 //    );
     return Container(
-      child: StreamBuilder<dynamic>(
-          stream: bloc.assets,
+      child: FutureBuilder<dynamic>(
+          //StreamBuilder<dynamic>(
+          //stream: bloc.assets,
+          //builder: (context, snapshot) {
+          future: DBProvider.db.getAllAssetsDB(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
+                  key: UniqueKey(),
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     Asset asset = snapshot.data[index];
@@ -63,8 +69,8 @@ class _AssetsListState extends State<AssetsList> {
                           assetName: asset.name,
                           assetPrice: asset.price,
                           onTapShowNews: () async {
-                            NewsList newsList = NewsList(assetName: asset.name);
-                            //newsList() =>
+                            Provider.of<NewsData>(context, listen: false)
+                                .getAssetNews(asset.name);
                           }),
                     );
                   });
