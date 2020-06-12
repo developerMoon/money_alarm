@@ -14,6 +14,9 @@ class NotificationsList extends StatelessWidget {
             return ListTile(
               title: Text(
                 '${notificationData.notifications[index]}',
+                style: TextStyle(
+                  fontSize: 25,
+                ),
               ),
               onLongPress: () {
                 notificationData.deletNotification(index);

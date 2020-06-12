@@ -27,7 +27,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var android = AndroidInitializationSettings('@mipmap/money_icon');
     var iOS = IOSInitializationSettings(
 //        requestAlertPermission: false,
 //        requestBadgePermission: false,
@@ -56,8 +56,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Asset List'),
-        content: Text('Your Asset Selection : $payload'),
+        title: Text('Watchlist'),
+        content: Text('$payload'),
       ),
     );
   }
