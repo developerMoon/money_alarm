@@ -33,7 +33,7 @@ class NewsData extends ChangeNotifier {
       pageSize: 20,
     );
     var newsLists = newsObj.articles.toList();
-    //news.clear();setState(() {
+
     for (var newsList in newsLists) {
       //print('------ ${newsList.url} -----');
       _news[newsList.title] = newsList.url;

@@ -28,28 +28,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
     // TODO: implement initState
     super.initState();
     var android = AndroidInitializationSettings('@mipmap/money_icon');
-    var iOS = IOSInitializationSettings(
-//        requestAlertPermission: false,
-//        requestBadgePermission: false,
-//        requestSoundPermission: false,
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    var iOS = IOSInitializationSettings();
     var initSettings = InitializationSettings(android, iOS);
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     flutterLocalNotificationsPlugin.initialize(initSettings,
         onSelectNotification: onSelectedNotification);
-    requestPermission();
-  }
-
-  requestPermission() async {
-    var result = await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
   }
 
   Future onSelectedNotification(String payload) async {
@@ -58,33 +42,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       builder: (_) => AlertDialog(
         title: Text('Watchlist'),
         content: Text('$payload'),
-      ),
-    );
-  }
-
-  Future onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {
-    // display a dialog with the notification details, tap ok to go to another page
-    showDialog(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(body),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text('Ok'),
-            onPressed: () async {
-//              Navigator.of(context, rootNavigator: true).pop();
-//              await Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                  builder: (context) => SecondScreen(payload),
-//                ),
-//              );
-            },
-          )
-        ],
       ),
     );
   }
@@ -98,7 +55,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          //var time = Time(14, 34, 0);
           var androidPlatformChannelSpecifics = AndroidNotificationDetails(
               'repeatDailyAtTime channel id',
               'repeatDailyAtTime channel name',
@@ -116,20 +72,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 .addNotification(formattedTime);
 
             String message = await DBProvider.db.getAssetListPricesDB();
-            print('messasge in notification: $message');
-            await flutterLocalNotificationsPlugin.show(
-                0, 'Your Assetlist Prices', message, platformChannelSpecifics,
+
+            int hour = int.parse(formattedTime.substring(0, 2));
+
+            int minute = int.parse(formattedTime.substring(3));
+            print('timeformat $hour $minute');
+            var notificationTime = Time(hour, minute, 00);
+
+            await flutterLocalNotificationsPlugin.showDailyAtTime(
+                0,
+                'Your Assetlist Prices',
+                message,
+                notificationTime,
+                platformChannelSpecifics,
                 payload: message);
           }, locale: LocaleType.ko);
-
-          var time = Time(22, 12, 30);
-
-          await flutterLocalNotificationsPlugin.showDailyAtTime(
-              0,
-              'show daily title',
-              'Daily notification shown at approximately $time}',
-              time,
-              platformChannelSpecifics);
         },
         backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),
